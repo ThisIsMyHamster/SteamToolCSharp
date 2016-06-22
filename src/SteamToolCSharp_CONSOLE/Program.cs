@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,18 +11,28 @@ namespace SteamToolCSharp_CONSOLE
 {
     class Program
     {
+        // STEAM API KEY: 3CB2326C319D80429445D852BDCC01C4
+        // ResolveVanityURL: http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=3CB2326C319D80429445D852BDCC01C4&vanityurl=USERVANITYNAME
+
+        static string metaLocation = AppDomain.CurrentDomain.BaseDirectory;
+        static string APIKey = "3CB2326C319D80429445D852BDCC01C4";
+        static string ResolveVanityURL = "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&vanityurl=";
+
         static void Main(string[] args)
         {
-            string s;
-            string s2;
+            //string s;
+            //string s2;
 
-            string[] terms = { "foo", "bar" };
+            //string[] terms = { "foo", "bar" };
 
-            s = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", false, "foo");
-            Console.WriteLine(s);
+            //s = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", false, "foo");
+            //Console.WriteLine(s);
 
-            s2 = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", terms);
-            Console.WriteLine(s2);
+            //s2 = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", terms);
+            //Console.WriteLine(s2);
+
+            getAPIData(ResolveVanityURL + "metherul", metaLocation + "temp.xml");
+            Process.Start("notepad++", metaLocation + "temp.xml");
 
         }
 
@@ -82,7 +94,7 @@ namespace SteamToolCSharp_CONSOLE
             // Check to see if there is anything in the storage variable
             if (sb.Length > 0)
             {
-                sb = sb.Replace(" ", ""); // Is this efficient? No.
+                sb = sb.Replace(" ", "");
                 return sb.ToString();
             }
 
@@ -109,6 +121,22 @@ namespace SteamToolCSharp_CONSOLE
             }
 
             return data;
+        }
+
+        public static bool getAPIData(string apiURL, string downloadLocation)
+        {
+            using (WebClient web = new WebClient())
+            {
+                web.DownloadFile(apiURL, downloadLocation);
+            }
+
+            // Use these returns 
+
+            if (File.Exists(downloadLocation))
+                return true;
+
+            else
+                return false;
         }
     }
 }
