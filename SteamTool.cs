@@ -20,11 +20,11 @@ namespace ConsoleApplication1
         }
         public static string getElement(string xmlPath, bool isString, string element)
         {
-            string[] apiData;
+            string[] apiData = { "" };
 
             // Load the downloaded XML file. 
             if (isString == false) apiData = File.ReadAllLines(xmlPath);
-            else apiData = xmlPath;
+            else apiData[0] = xmlPath;
             string openingTag = "<" + element + ">";
             string closingTag = "</" + element + ">";
             StringBuilder sb = new StringBuilder();
@@ -80,11 +80,13 @@ namespace ConsoleApplication1
         //Or if it's a while down, just use a list of strings to get down there.
         public static string getElement(string xmlPath, string[] elementPath) { 
         
-            string data = getElement(xmlPath, false, elementPath[0];
+            string data = getElement(xmlPath, false, elementPath[0]);
+            Console.WriteLine("Got data! Element = " + elementPath[0]+ ", Data = " + data);
             if (elementPath.Length == 1) return data;
-            foreach (string elementName in elementPath)
+            foreach (string elementName in elementPath.Skip(1))
             {
-                data = getElement(xmlPath, true, elementPath[0];
+                data = getElement(data, true, elementName);
+                Console.WriteLine("Got data! Element = " + elementName + ", Data = " + data);
             }
             return data;
         }
