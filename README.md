@@ -1,6 +1,9 @@
 # SteamToolCSharp
 SteamTool re-written and optimized in C#
 
+# --NOTE--
+# MAKE SURE TO CLONE THIS REPO BEFORE YOU DO ANY WORK
+
 # What is SteamTool?
 SteamTool is a program that very slowly took a valve user ID and calculates (about) the worth of items in their backpack.
 
