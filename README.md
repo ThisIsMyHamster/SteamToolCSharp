@@ -8,3 +8,6 @@ SteamTool is a program that very slowly took a valve user ID and calculates (abo
 - Rewrite the entire program into C# FROM SCRATCH (w/o looking at the old source code)
 - Make it faster
 - Make it more accurate (finding averages, min-max, ect).
+
+# Notes
+- If we can't manage to match the speed of System.Xml and JSON.Net, then we should switch
