@@ -1,0 +1,7 @@
+C:\Website_Dev\Flask Stuff\SteamToolCSharp_CONSOLE\SteamToolCSharp_CONSOLE\bin\Debug\SteamToolCSharp_CONSOLE.exe.config
+C:\Github\SteamToolCSharp\SteamToolCSharp_CONSOLE\bin\Debug\SteamToolCSharp_CONSOLE.exe.config
+C:\Github\SteamToolCSharp\SteamToolCSharp_CONSOLE\bin\Debug\SteamToolCSharp_CONSOLE.exe
+C:\Github\SteamToolCSharp\SteamToolCSharp_CONSOLE\bin\Debug\SteamToolCSharp_CONSOLE.pdb
+C:\Github\SteamToolCSharp\SteamToolCSharp_CONSOLE\obj\Debug\SteamToolCSharp_CONSOLE.csprojResolveAssemblyReference.cache
+C:\Github\SteamToolCSharp\SteamToolCSharp_CONSOLE\obj\Debug\SteamToolCSharp_CONSOLE.exe
+C:\Github\SteamToolCSharp\SteamToolCSharp_CONSOLE\obj\Debug\SteamToolCSharp_CONSOLE.pdb

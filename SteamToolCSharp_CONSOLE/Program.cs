@@ -5,30 +5,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace SteamToolCSharp_CONSOLE
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string s = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", false, "foo");
-            Console.WriteLine(s);
+            string s;
+            string s2;
+
             string[] terms = { "foo", "bar" };
-            string s2 = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", terms);
+
+            s = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", false, "foo");
+            Console.WriteLine(s);
+
+            s2 = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", terms);
             Console.WriteLine(s2);
 
         }
+
         public static string getElement(string xmlPath, bool isString, string element)
         {
-            string[] apiData;
+            StringBuilder sb;
 
-            // Load the downloaded XML file. 
-            if (isString == false) apiData = File.ReadAllLines(xmlPath);
-            else apiData = xmlPath;
-            string openingTag = "<" + element + ">";
-            string closingTag = "</" + element + ">";
-            StringBuilder sb = new StringBuilder();
-            bool readLines = false;
+            string openingTag;
+            string closingTag;
+
+            bool readLines;
+
+            string[] apiData = null; // HERE
+
+            if (isString == false)
+                apiData = File.ReadAllLines(xmlPath);
+
+            // Not quite sure what you're doing here. If you're assigning a "fallback" if isString is false, just set it to null in the declaration seen above
+            //else
+            //    apiData = xmlPath;
+
+            openingTag = "<" + element + ">";
+            closingTag = "</" + element + ">";
+            sb = new StringBuilder();
+            readLines = false;
+
             // Then run through each line and search for the tags I want
             foreach (string line in apiData)
             {
@@ -74,18 +92,22 @@ namespace ConsoleApplication1
                 return "";
             }
         }
-
-
-
-        //Or if it's a while down, just use a list of strings to get down there.
-        public static string getElement(string xmlPath, string[] elementPath) { 
         
-            string data = getElement(xmlPath, false, elementPath[0]);
-            if (elementPath.Length == 1) return data;
+        //Or if it's a while down, just use a list of strings to get down there.
+        public static string getElement(string xmlPath, string[] elementPath)
+        {
+            string data;
+
+            data = getElement(xmlPath, false, elementPath[0]);
+
+            if (elementPath.Length == 1)
+                return data;
+
             foreach (string elementName in elementPath)
             {
                 data = getElement(xmlPath, true, elementPath[0]);
             }
+
             return data;
         }
     }
