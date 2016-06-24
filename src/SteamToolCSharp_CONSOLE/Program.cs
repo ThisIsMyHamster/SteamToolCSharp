@@ -31,12 +31,14 @@ namespace SteamToolCSharp_CONSOLE
             //s2 = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", terms);
             //Console.WriteLine(s2);
 
-            getAPIData(ResolveVanityURL + "metherul", metaLocation + "temp.xml");
-            Process.Start("notepad", metaLocation + "temp.xml");
+            getAPIData(ResolveVanityURL + "metherul", metaLocation + "temp.xml"); //Grabs the XML file that contains the user's steam numeric ID.
+            //Process.Start("notepad", metaLocation + "temp.xml");
+            string s = getElement(metaLocation + "temp.xml", false, "steamid"); //steamid is actually inside the response tag, but its all one line so it doesn't matter anyway.
+            Console.WriteLine(s); //Output
 
         }
 
-        public static string getElement(string xmlPath, bool isString, string element)
+        public static string getElement(string xmlPath, bool isString, string element) //isString is here in case you want to get an element from a string.
         {
             StringBuilder sb;
 
@@ -49,10 +51,6 @@ namespace SteamToolCSharp_CONSOLE
 
             if (isString == false)
                 apiData = File.ReadAllLines(xmlPath);
-
-            // Not quite sure what you're doing here. If you're assigning a "fallback" if isString is false, just set it to null in the declaration seen above
-            //else
-            //    apiData = xmlPath;
 
             openingTag = "<" + element + ">";
             closingTag = "</" + element + ">";
@@ -69,7 +67,7 @@ namespace SteamToolCSharp_CONSOLE
 
                 if (line.Contains(openingTag) && line.Contains(closingTag))
                 {
-                    sb.Append(line);
+                    sb.Append(line.Substring(line.IndexOf(openingTag), line.IndexOf(closingTag) - 1)); //Remove surrounding data.
                     sb.Replace(openingTag, "");
                     sb.Replace(closingTag, "");
                     break;
@@ -77,14 +75,14 @@ namespace SteamToolCSharp_CONSOLE
 
                 if (line.Contains(openingTag))
                 {
-                    sb.Append(line);
+                    sb.Append(line.Substring(line.IndexOf(openingTag), line.Length - 1)); //Remove data from beginning to open tag
                     sb.Replace(openingTag, "");
                     readLines = true;
                 }
 
                 if (line.Contains(closingTag))
                 {
-                    sb.Append(line);
+                    sb.Append(line.Substring(0, line.IndexOf(closingTag) - 1)); //Remove data from close tag to end.
                     sb.Replace(closingTag, "");
                     readLines = true;
                 }
@@ -100,8 +98,8 @@ namespace SteamToolCSharp_CONSOLE
 
             else
             {
-                // I feel like this isn't going to work if you actually tried, but you get the point. ATM I'm writing this in notepad++ cause I dunno
-                return "";
+                // I feel like this isn't going to work if you actually tried, but you get the point. 
+                throw new System.ArgumentException("Didn't find any data for that tag!", element); //Throw exception!
             }
         }
         
