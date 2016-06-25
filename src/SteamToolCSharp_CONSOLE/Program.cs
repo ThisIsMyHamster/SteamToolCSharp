@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SteamToolCSharp_CONSOLE
@@ -17,7 +18,7 @@ namespace SteamToolCSharp_CONSOLE
         static string metaLocation = AppDomain.CurrentDomain.BaseDirectory;
         static string APIKey = "3CB2326C319D80429445D852BDCC01C4";
         static string ResolveVanityURL = "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&vanityurl=";
-
+        static string GetPlayerItems = "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&SteamId="; 
         static void Main(string[] args)
         {
             //string s;
@@ -33,8 +34,8 @@ namespace SteamToolCSharp_CONSOLE
 
             getAPIData(ResolveVanityURL + "metherul", metaLocation + "temp.xml"); //Grabs the XML file that contains the user's steam numeric ID.
             //Process.Start("notepad", metaLocation + "temp.xml");
-            string s = getElement(metaLocation + "temp.xml", false, "steamid"); //steamid is actually inside the response tag, but its all one line so it doesn't matter anyway.
-            Console.WriteLine(s); //Output
+            string id = getElement(metaLocation + "temp.xml", false, "steamid"); //steamid is actually inside the response tag, but its all one line so it doesn't matter anyway.
+            getAPIData(GetPlayerItems + id, metaLocation + "temp.xml");
 
         }
 
@@ -92,8 +93,7 @@ namespace SteamToolCSharp_CONSOLE
             // Check to see if there is anything in the storage variable
             if (sb.Length > 0)
             {
-                sb = sb.Replace(" ", "");
-                return sb.ToString();
+                return Regex.Replace(sb.ToString(), @"\s+", "");
             }
 
             else
