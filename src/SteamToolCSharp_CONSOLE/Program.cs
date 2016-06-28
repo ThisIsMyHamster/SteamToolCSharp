@@ -34,10 +34,10 @@ namespace SteamToolCSharp_CONSOLE
             //s2 = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", terms);
             //Console.WriteLine(s2);
 
-            //Gonna leave ^ alone
-            //Simple GUI
+            // Gonna leave ^ alone
 
             string vanityUsername;
+            string id;
 
             Console.Write("Username: ");
             vanityUsername = Console.ReadLine();
@@ -45,8 +45,19 @@ namespace SteamToolCSharp_CONSOLE
             Console.WriteLine("Fetching numeric steam ID");
 
             getAPIData(ResolveVanityURL + vanityUsername, metaLocation + "temp.xml"); //Grabs the XML file that contains the user's steam numeric ID.
-            string id = getElement(metaLocation + "temp.xml", false, "steamid"); //steamid is actually inside the response tag, but its all one line so it doesn't matter anyway.
 
+            //Janky as hell, but it works. 
+            try
+            {
+                id = getElement(metaLocation + "temp.xml", false, "steamid"); //steamid is actually inside the response tag, but its all one line so it doesn't matter anyway.
+            }
+
+            catch
+            {
+                Console.WriteLine("Username does not exist!");
+                return;
+            }
+            
             Console.WriteLine("ID Found: {0}", id);
             Console.WriteLine("Fetching backpack contents");
 
