@@ -18,9 +18,11 @@ namespace SteamToolCSharp_CONSOLE
         static string metaLocation = AppDomain.CurrentDomain.BaseDirectory;
         static string APIKey = "3CB2326C319D80429445D852BDCC01C4";
         static string ResolveVanityURL = "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&vanityurl=";
-        static string GetPlayerItems = "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&SteamId="; 
+        static string GetPlayerItems = "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&SteamId=";
+
         static void Main(string[] args)
         {
+
             //string s;
             //string s2;
 
@@ -32,10 +34,27 @@ namespace SteamToolCSharp_CONSOLE
             //s2 = getElement("C:\\Users\\Nicky\\Documents\\testXML.xml", terms);
             //Console.WriteLine(s2);
 
-            getAPIData(ResolveVanityURL + "metherul", metaLocation + "temp.xml"); //Grabs the XML file that contains the user's steam numeric ID.
-            //Process.Start("notepad", metaLocation + "temp.xml");
+            //Gonna leave ^ alone
+            //Simple GUI
+
+            string vanityUsername;
+
+            Console.Write("Username: ");
+            vanityUsername = Console.ReadLine();
+
+            Console.WriteLine("Fetching numeric steam ID");
+
+            getAPIData(ResolveVanityURL + vanityUsername, metaLocation + "temp.xml"); //Grabs the XML file that contains the user's steam numeric ID.
             string id = getElement(metaLocation + "temp.xml", false, "steamid"); //steamid is actually inside the response tag, but its all one line so it doesn't matter anyway.
+
+            Console.WriteLine("ID Found: {0}", id);
+            Console.WriteLine("Fetching backpack contents");
+
             getAPIData(GetPlayerItems + id, metaLocation + "temp.xml");
+
+            Console.WriteLine("Backpack found");
+            Process.Start(metaLocation + "temp.xml");
+
 
         }
 
