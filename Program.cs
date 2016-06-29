@@ -75,7 +75,7 @@ namespace SteamToolCSharp_CONSOLE
 
         public static void getIGetPrices()
         {
-            // Download the IGetPrices API file
+            // Download the IGetPrices API files
             getAPIData(IGetPrices, metaLocation + "iGetPrices_temp.json");
         }
 
