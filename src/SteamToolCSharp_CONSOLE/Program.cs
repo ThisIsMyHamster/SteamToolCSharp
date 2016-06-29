@@ -55,7 +55,7 @@ namespace SteamToolCSharp_CONSOLE
             Console.WriteLine("Backpack found");
 
             // Parse and set the backpack items to a list - NOTE: Since multipleNodes = true, the response will be stored in a list with a varying size (depending on the query)
-            backpackItems = getXMLElement(metaLocation + "backpackContents_temp.xml", "result/items/item/id", true);
+            backpackItems = getXMLElement(metaLocation + "backpackContents_temp.xml", "result/items/item/defindex", true);
 
             foreach(string item in backpackItems)
             {
