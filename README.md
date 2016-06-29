@@ -1,6 +1,3 @@
-# TO DO
-&#x2611; The current code for parsing the XML data files throws an error when the element it's searching for does not exist, working on fixing right now
-
 # SteamToolCSharp
 SteamTool re-written and optimized in C#
 

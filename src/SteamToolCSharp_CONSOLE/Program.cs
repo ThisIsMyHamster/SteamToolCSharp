@@ -58,6 +58,8 @@ namespace SteamToolCSharp_CONSOLE
                 Console.WriteLine(item);
             }
 
+            Console.WriteLine("Backpack Size: {0} items", backpackItems.Count);
+
             //Cleanup any files that were created throughout the process of the program       
             //cleanDirectory(createdFiles);
             
