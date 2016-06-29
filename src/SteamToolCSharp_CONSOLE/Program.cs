@@ -24,6 +24,12 @@ namespace SteamToolCSharp_CONSOLE
         static string GetPlayerItems = "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&SteamId=";
         static string IGetPrices = "https://backpack.tf/api/IGetPrices/v4?key=56ce0410b98d88892ef9dd60";
 
+        public static void getIGetPrices()
+        {
+            // Download the IGetPrices API file
+            getAPIData(IGetPrices, metaLocation + "iGetPrices_temp.json");
+        }
+
         static void Main(string[] args)
         {
             string vanityUsername;
@@ -33,6 +39,11 @@ namespace SteamToolCSharp_CONSOLE
             string[] createdFiles = { "numericID_temp.xml", "backpackContents_temp.xml", "iGetPrices_temp.json" };
 
             List<string> backpackItems = new List<string>();
+
+            ThreadStart itemsStart = new ThreadStart(getIGetPrices);
+            Thread itemsThread = new Thread(itemsStart);
+
+            itemsThread.Start();
 
             // Get the users vanity Steam username
             Console.Write("Username: ");
@@ -64,8 +75,7 @@ namespace SteamToolCSharp_CONSOLE
 
             Console.WriteLine("Backpack Size: {0} items", backpackItems.Count);
 
-            // Download the IGetPrices API file
-            getAPIData(IGetPrices, metaLocation + "iGetPrices_temp.json");
+          
 
             //Cleanup any files that were created throughout the process of the program       
             //cleanDirectory(createdFiles);
