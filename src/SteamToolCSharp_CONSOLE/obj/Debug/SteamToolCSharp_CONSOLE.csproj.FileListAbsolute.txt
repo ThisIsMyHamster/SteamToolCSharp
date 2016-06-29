@@ -17,3 +17,5 @@ C:\Users\Nicky\Documents\GitHub\SteamToolCSharp\src\SteamToolCSharp_CONSOLE\obj\
 C:\Users\Nicky\Documents\GitHub\SteamToolCSharp\src\SteamToolCSharp_CONSOLE\bin\Debug\SteamToolCSharp_CONSOLE.exe
 C:\Users\Nicky\Documents\GitHub\SteamToolCSharp\src\SteamToolCSharp_CONSOLE\bin\Debug\SteamToolCSharp_CONSOLE.pdb
 C:\Users\Nicky\Documents\GitHub\SteamToolCSharp\src\SteamToolCSharp_CONSOLE\obj\Debug\SteamToolCSharp_CONSOLE.csprojResolveAssemblyReference.cache
+C:\Github\SteamToolCSharp\src\SteamToolCSharp_CONSOLE\bin\Debug\Newtonsoft.Json.dll
+C:\Github\SteamToolCSharp\src\SteamToolCSharp_CONSOLE\bin\Debug\Newtonsoft.Json.xml

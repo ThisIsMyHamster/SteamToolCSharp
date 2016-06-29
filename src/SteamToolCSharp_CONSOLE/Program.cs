@@ -7,8 +7,11 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 using System.Xml;
+using System.Threading;
+
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace SteamToolCSharp_CONSOLE
 {
@@ -19,6 +22,7 @@ namespace SteamToolCSharp_CONSOLE
         static string metaLocation = AppDomain.CurrentDomain.BaseDirectory;
         static string ResolveVanityURL = "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&vanityurl=";
         static string GetPlayerItems = "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=3CB2326C319D80429445D852BDCC01C4&format=xml&SteamId=";
+        static string IGetPrices = "https://backpack.tf/api/IGetPrices/v4?key=56ce0410b98d88892ef9dd60";
 
         static void Main(string[] args)
         {
@@ -26,7 +30,7 @@ namespace SteamToolCSharp_CONSOLE
             string numericalUsername;
 
             // List of files produced by the program, used by cleanDirectory to remove all temp files
-            string[] createdFiles = { "numericID_temp.xml", "backpackContents_temp.xml" };
+            string[] createdFiles = { "numericID_temp.xml", "backpackContents_temp.xml", "iGetPrices_temp.json" };
 
             List<string> backpackItems = new List<string>();
 
@@ -40,7 +44,7 @@ namespace SteamToolCSharp_CONSOLE
             getAPIData(ResolveVanityURL + vanityUsername, metaLocation + "numericID_temp.xml");
 
             // Parse and set the numericalUsername - NOTE: Since multipleNodes = false, the response will be stored in the first([0]) index of the returning list
-            numericalUsername = getElement(metaLocation + "numericID_temp.xml", "response/steamid", false)[0]; 
+            numericalUsername = getXMLElement(metaLocation + "numericID_temp.xml", "response/steamid", false)[0]; 
 
             Console.WriteLine("ID Found: {0}", numericalUsername);
             Console.WriteLine("Fetching backpack contents");
@@ -51,7 +55,7 @@ namespace SteamToolCSharp_CONSOLE
             Console.WriteLine("Backpack found");
 
             // Parse and set the backpack items to a list - NOTE: Since multipleNodes = true, the response will be stored in a list with a varying size (depending on the query)
-            backpackItems = getElement(metaLocation + "backpackContents_temp.xml", "result/items/item/id", true);
+            backpackItems = getXMLElement(metaLocation + "backpackContents_temp.xml", "result/items/item/id", true);
 
             foreach(string item in backpackItems)
             {
@@ -59,6 +63,9 @@ namespace SteamToolCSharp_CONSOLE
             }
 
             Console.WriteLine("Backpack Size: {0} items", backpackItems.Count);
+
+            // Download the IGetPrices API file
+            getAPIData(IGetPrices, metaLocation + "iGetPrices_temp.json");
 
             //Cleanup any files that were created throughout the process of the program       
             //cleanDirectory(createdFiles);
@@ -81,7 +88,7 @@ namespace SteamToolCSharp_CONSOLE
                 return false;
         }
 
-        public static List<string> getElement(string xmlPath, string nodePath, bool multipleNodes)
+        public static List<string> getXMLElement(string xmlPath, string nodePath, bool multipleNodes)
         {
             // README
             // THIS METHOD RETURNS LIST<STRING>. IF multipleNodes = false, THEN THE RESPONSE WILL ALWAYS BE IN THE FIRST INDEX ([0]).
@@ -118,7 +125,7 @@ namespace SteamToolCSharp_CONSOLE
             }
         }
 
-        // The "Homebrew" XML parsing methods
+        // The "Homebrew" XML parsing methods (use the shortcut: Ctrl + K + U to uncomment large blocks of text)
 
         //public static string getElement(string xmlPath, bool isString, string element) // isString is here in case you want to get an element from a string.
         //{
@@ -203,4 +210,5 @@ namespace SteamToolCSharp_CONSOLE
         //    return data;
         //}
     }
+
 }
